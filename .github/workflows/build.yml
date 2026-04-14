@@ -16,8 +16,8 @@ jobs:
             - name: Install ldid
               run: brew install ldid
 
-            - name: Select Xcode version
-              run: sudo xcode-select -s /Applications/Xcode_16.2.app
+            - name: Remove tvOS brand assets (causes actool SDK error on CI)
+              run: rm -rf StosVPN/Assets.xcassets/AppIcon.brandassets
 
             - name: Build Xcode Archive
               run: |
@@ -28,9 +28,7 @@ jobs:
                     -archivePath build/StosVPN.xcarchive \
                     CODE_SIGN_IDENTITY="" \
                     CODE_SIGNING_REQUIRED=NO \
-                    CODE_SIGNING_ALLOWED=NO \
-                    SUPPORTED_PLATFORMS="iphoneos iphonesimulator" \
-                    TARGETED_DEVICE_FAMILY="1,2"
+                    CODE_SIGNING_ALLOWED=NO
 
             - name: Create Payload directory
               run: mkdir -p Payload
